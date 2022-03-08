@@ -63,7 +63,7 @@ while True:
                 if len(data) > 2:
                     data = data[2:]
                     data = data.decode()
-                    print('Received: ' + data)
+                    print('Received:  ' + data)
             else:
                 print ("disconnected")
                 server_status_offline()
