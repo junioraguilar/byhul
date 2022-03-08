@@ -6,7 +6,8 @@ import time
 import GPIOConfig
 import RPi.GPIO as GPIO
 
-os.system("/home/pi/RPi_Cam_Web_Interface/start.sh")
+
+#os.system("/home/pi/RPi_Cam_Web_Interface/start.sh")
 
 host = 'raspberrypi.local'
 port = 1235
