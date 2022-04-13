@@ -25,7 +25,7 @@ kd = 0
 ki = 0.001
 
 
-setpoint = 0
+setpoint = 100
 i_error = 0
 d_error = 0
 
@@ -94,9 +94,11 @@ motor_left.start(0)
 presentTime2 = time.time()
 while True:
     now = time.time()
+    yaw, pitch, row = mpu.compFilter(0)
     if pastTime > 5:
+        print("calibrated")
         break
-        print("calibrating")
+
     pastTime = now - presentTime2
 
 
@@ -109,14 +111,14 @@ while True:
 
 
     
-    error = setpoint - yaw
+    error = setpoint - pitch
     i_error += error * pastTime
     d_error = (error - lastError)/pastTime
 
 
     pid_value = kp*error + ki*i_error + kd*d_error
-    speed_left = 15 + pid_value
-    speed_right = 20 - pid_value
+    speed_left = 80 + pid_value
+    speed_right = 80 - pid_value
     if speed_left > 99:
         speed_left = 99
     elif speed_left <= 1:

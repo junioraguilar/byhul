@@ -20,12 +20,12 @@ def MoveMotors(motor_right_speed, motor_left_speed):
     motor_left.ChangeDutyCycle(motor_left_speed)
     motor_claw.ChangeDutyCycle(0)
 
-kp = 2
-kd = 0
-ki = 0.001
+kp = 2 #2
+kd = 0.3
+ki = 0.001 #0.001
 
 
-setpoint = 0
+setpoint = 79
 i_error = 0
 d_error = 0
 
@@ -94,9 +94,11 @@ motor_left.start(0)
 presentTime2 = time.time()
 while True:
     now = time.time()
+    yaw, pitch, row = mpu.compFilter(0)
     if pastTime > 5:
+        print("calibrated")
         break
-        print("calibrating")
+        
     pastTime = now - presentTime2
 
 
@@ -109,13 +111,13 @@ while True:
 
 
     
-    error = setpoint - yaw
+    error = setpoint - pitch
     i_error += error * pastTime
     d_error = (error - lastError)/pastTime
 
 
     pid_value = kp*error + ki*i_error + kd*d_error
-    speed_left = 15 - pid_value
+    speed_left = 20 - pid_value #   15
     speed_right = 20 + pid_value
     if speed_left > 99:
         speed_left = 99
@@ -128,7 +130,7 @@ while True:
 
 
     
-    print("\rerror: " + str(error) + "    Pid: " + str(pid_value))
+    print("\rerror: " + str(error) + "    Pid: " + str(pid_value) + ""  + str())
     GPIO.output(GPIOConfig.MOTOR_RIGHT_EN, GPIO.HIGH)
     GPIO.output(GPIOConfig.MOTOR_RIGHT_INA, 1)
     GPIO.output(GPIOConfig.MOTOR_RIGHT_INB, 0)
@@ -148,8 +150,3 @@ while True:
 
     lastError = error
     lastTime = presentTime
-
-
-
-
-

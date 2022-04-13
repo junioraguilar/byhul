@@ -16,6 +16,7 @@ def Distance_data():
         received_data_acum += received_data
     try:
         media_distance_data = int(int(received_data_acum)/15)
+        print(media_distance_data)
         file = open("/home/pi/Desktop/byhull/SensorData.txt", "w")
         file.write(str(media_distance_data))
         file.close()
